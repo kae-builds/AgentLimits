@@ -9,7 +9,7 @@ import Foundation
 
 /// App Group configuration for shared data access between App and Widget
 enum AppGroupConfig {
-    static let groupId = "group.com.dmng.agentlimit"
+    static let groupId = "group.com.falcon.agentlimits"
     static let appLanguageKey = "app_language"
     static let snapshotDirectory = "Library/Application Support/AgentLimit"
     static let usageRefreshIntervalMinutesKey = "usage_refresh_interval_minutes"

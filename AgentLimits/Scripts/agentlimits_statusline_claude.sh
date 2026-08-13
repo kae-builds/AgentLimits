@@ -15,7 +15,7 @@
 set -euo pipefail
 
 # App Group identifier
-APP_GROUP="group.com.dmng.agentlimit"
+APP_GROUP="group.com.falcon.agentlimits"
 
 # Snapshot file path
 SNAPSHOT_FILE="$HOME/Library/Group Containers/${APP_GROUP}/Library/Application Support/AgentLimit/usage_snapshot_claude.json"
@@ -213,7 +213,7 @@ debug_log "display_mode_override=${DISPLAY_MODE_OVERRIDE:-none}"
 
 # Localized strings
 if [[ "$LANG_CODE" == "ja" ]]; then
-    L_RESET="リセット時間"
+    L_RESET=""
     L_UPDATED="更新:"
     L_ERROR_NO_FILE="エラー: スナップショットファイルが見つかりません"
     L_ERROR_NO_JQ="エラー: jqがインストールされていません"
@@ -351,9 +351,20 @@ format_updated_at() {
     echo "${L_UPDATED} ${updated_time}"
 }
 
+format_reset_at() {
+    local reset_time="$1"
+    if [[ -z "$L_RESET" ]]; then
+        echo "$reset_time"
+    else
+        echo "${L_RESET} ${reset_time}"
+    fi
+}
+
 # Format reset times
 primary_reset_time=$(convert_iso8601_to_local "$primary_reset_at" "%H:%M")
-secondary_reset_time=$(convert_iso8601_to_local "$secondary_reset_at" "%Y-%m-%d %H:%M")
+secondary_reset_time=$(convert_iso8601_to_local "$secondary_reset_at" "%m-%d %H:%M")
+primary_reset_text="$(format_reset_at "$primary_reset_time")"
+secondary_reset_text="$(format_reset_at "$secondary_reset_time")"
 
 # Format updated time (absolute)
 updated_text=$(format_updated_at "$fetched_at")
@@ -463,4 +474,4 @@ else
 fi
 
 # Output formatted string with colored percentages and gray reset times/updated time
-echo -e "🕔 5h: ${primary_color}${primary_text}${RESET_COLOR} ${GRAY}(${L_RESET} ${primary_reset_time})${RESET_COLOR} / 📅 1w: ${secondary_color}${secondary_text}${RESET_COLOR} ${GRAY}(${L_RESET} ${secondary_reset_time})${RESET_COLOR} - ${GRAY}${updated_text}${RESET_COLOR}"
+echo -e "5h: ${primary_color}${primary_text}${RESET_COLOR} ${GRAY}(${primary_reset_text})${RESET_COLOR} / 1w: ${secondary_color}${secondary_text}${RESET_COLOR} ${GRAY}(${secondary_reset_text})${RESET_COLOR} - ${GRAY}${updated_text}${RESET_COLOR}"
