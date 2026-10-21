@@ -154,10 +154,10 @@ xcodebuild test -scheme AgentLimits -destination 'platform=macOS'
 - `dailyUsage`: `[DailyUsageEntry]` - Daily usage entries for heatmap (ISO8601 date string + totalTokens)
 - `fetchedAt`: Date
 
-### Storage Paths (App Group: `group.com.dmng.agentlimit`)
+### Storage Paths (App Group: `group.com.falcon.agentlimits`)
 
 ```
-~/Library/Group Containers/group.com.dmng.agentlimit/Library/Application Support/AgentLimit/
+~/Library/Group Containers/group.com.falcon.agentlimits/Library/Application Support/AgentLimit/
 ├── usage_snapshot.json           # Codex usage limits
 ├── usage_snapshot_claude.json    # Claude Code usage limits
 ├── token_usage_codex.json        # ccusage Codex
